@@ -5,7 +5,7 @@ import { SessionLengthButton, SessionTime } from "./components";
 function App() {
   const [sessionLength, setSessionLength] = useState(1);
   const [currentTime, setCurrentTime] = useState(sessionLength * 60);
-  const [countdownRunning, setCountdownRunning] = useState(false);
+  const [timerRunning, setTimerRunning] = useState(false);
 
   //format the current time as mm:ss
   const formatTime = (time: number) => {
@@ -23,12 +23,12 @@ function App() {
   useEffect(() => {
     let countdownInterval: NodeJS.Timeout | undefined;
 
-    if (countdownRunning && currentTime > 0) {
+    if (timerRunning && currentTime > 0) {
       countdownInterval = setInterval(() => {
         setCurrentTime((currentTime) => currentTime - 1);
       }, 1000);
-    } else if (countdownRunning && currentTime === 0) {
-      setCountdownRunning(false);
+    } else if (timerRunning && currentTime === 0) {
+      setTimerRunning(false);
     }
 
     return () => {
@@ -36,13 +36,13 @@ function App() {
         clearInterval(countdownInterval);
       }
     };
-  }, [countdownRunning, currentTime]);
+  }, [timerRunning, currentTime]);
 
   const handlePlay = () => {
-    setCountdownRunning(true);
+    setTimerRunning(true);
   };
   const handlePause = () => {
-    setCountdownRunning(!countdownRunning);
+    setTimerRunning(!timerRunning);
   };
 
   const handleReset = () => {
