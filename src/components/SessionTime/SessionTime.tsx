@@ -1,10 +1,16 @@
-import React from 'react';
+import React from "react";
+import { Heading } from "evergreen-ui";
 
 interface SessionTime {
-    time: string;
+  time: string;
+  title: string;
 }
-export const SessionTime = ({time}: SessionTime) => {
-    return(
-        <h1>{time}</h1>
-    )
-}
+export const SessionTime = ({ time, title }: SessionTime) => {
+  return (
+    <Heading size={800} marginBottom={10} marginTop={50}>
+      {title}
+      <br />
+      {time}
+    </Heading>
+  );
+};
