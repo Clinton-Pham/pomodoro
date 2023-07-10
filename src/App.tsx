@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./App.css";
 import {
-  SessionLengthButton,
+  SessionLengthControl,
   SessionTime,
   ButtonComponent,
 } from "./components";
 import { formatTime } from "./utils";
 import { Pane, PauseIcon, PlayIcon, ResetIcon } from "evergreen-ui";
-import { useCountdown } from "./utils/useCountdown";
+import { useCountdown } from "./hooks/useCountdown";
 
 function App() {
   const [sessionLength, setSessionLength] = useState(1);
@@ -49,7 +49,7 @@ function App() {
         justifyContent="center"
         marginTop={300}
       >
-        <SessionLengthButton
+        <SessionLengthControl
           title="Session Length"
           disabled={countdownRunning}
           sessionLength={sessionLength}
@@ -59,7 +59,7 @@ function App() {
           }}
         />
 
-        <SessionLengthButton
+        <SessionLengthControl
           title="Break Length"
           sessionLength={breakLength}
           onChange={setBreakLength}

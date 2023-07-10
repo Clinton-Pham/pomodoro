@@ -1,3 +1,3 @@
 export * from "./SessionTime/SessionTime";
-export * from "./SessionLengthButton/SessionLengthButton";
+export * from "./SessionLengthButton/SessionLengthControl";
 export * from "./Button/ButtonComponent";

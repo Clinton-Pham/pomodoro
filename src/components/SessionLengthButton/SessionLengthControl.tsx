@@ -14,17 +14,17 @@ interface SessionLengthButtonProps {
   title: string;
 }
 
-export const SessionLengthButton: React.FC<SessionLengthButtonProps> = ({
+export const SessionLengthControl: React.FC<SessionLengthButtonProps> = ({
   sessionLength,
   onChange,
   disabled = false,
   title,
 }: SessionLengthButtonProps) => {
-  const handleIncrementCounter = () => {
+  const handleIncrementCounter = (): void => {
     onChange(sessionLength + 1);
   };
 
-  const handleDecrementCounter = () => {
+  const handleDecrementCounter = (): void => {
     onChange(sessionLength > 1 ? sessionLength - 1 : 1);
   };
   return (
