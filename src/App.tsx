@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import {
   SessionLengthButton,
@@ -7,41 +7,27 @@ import {
 } from "./components";
 import { formatTime } from "./utils";
 import { Pane, PauseIcon, PlayIcon, ResetIcon } from "evergreen-ui";
+import { useCountdown } from "./utils/useCountdown";
 
 function App() {
-  const [sessionLength, setSessionLength] = useState(25);
-  const [currentTime, setCurrentTime] = useState(sessionLength * 60);
-  const [countdownRunning, setCountdownRunning] = useState(false);
-
+  const [sessionLength, setSessionLength] = useState(1);
   const [breakLength, setBreakLength] = useState(5);
   const [isBreak, setIsBreak] = useState(false);
-
-  useEffect(() => {
-    let countdownInterval: NodeJS.Timeout | undefined;
-    if (countdownRunning && currentTime > 0) {
-      countdownInterval = setInterval(() => {
-        setCurrentTime((currentTime) => currentTime - 1);
-      }, 1000);
-    } else if (countdownRunning && currentTime === 0) {
-      if (isBreak) {
-        if (currentTime === 0) {
-          setCountdownRunning(false);
+  const [sessionCounter, setSessionCounter] = useState(0);
+  const { countdownRunning, currentTime, setCurrentTime, setCountdownRunning } =
+    useCountdown({
+      initialTime: sessionLength * 60,
+      onFinish: () => {
+        if (isBreak) {
           setIsBreak(false);
           setCurrentTime(sessionLength * 60);
         } else {
-          setCurrentTime(sessionLength * 60);
+          setIsBreak(true);
+          setCurrentTime(breakLength * 60);
+          setSessionCounter(sessionCounter + 1);
         }
-      } else {
-        setIsBreak((isBreak: boolean) => !isBreak);
-        setCurrentTime(breakLength * 60);
-      }
-    }
-    return () => {
-      if (countdownInterval) {
-        clearInterval(countdownInterval);
-      }
-    };
-  }, [countdownRunning, currentTime, sessionLength, breakLength, isBreak]);
+      },
+    });
 
   const handlePause = (): void => {
     setCountdownRunning(!countdownRunning);
@@ -56,6 +42,7 @@ function App() {
 
   return (
     <div className="App">
+      <h5>You've completed {sessionCounter} sessions today!</h5>
       <Pane
         display="flex"
         alignItems="center"

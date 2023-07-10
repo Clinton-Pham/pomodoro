@@ -1,4 +1,5 @@
 import { Button } from "evergreen-ui";
+import React from "react";
 interface IButtonProps {
   onClick: () => void;
   disabled?: boolean;
@@ -10,7 +11,6 @@ export const ButtonComponent: React.FC<IButtonProps> = ({
   onClick,
   disabled,
   children,
-  icon,
 }: IButtonProps) => {
   return (
     <div>
