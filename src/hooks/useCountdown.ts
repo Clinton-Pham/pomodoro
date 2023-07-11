@@ -1,3 +1,4 @@
+import type React from 'react'
 import { useEffect, useState } from 'react'
 
 interface IUseCountDownProps {
@@ -5,7 +6,14 @@ interface IUseCountDownProps {
   onFinish: () => void
 }
 
-export const useCountdown = ({ initialTime, onFinish }: IUseCountDownProps) => {
+interface ICountDown {
+  countdownRunning: boolean
+  currentTime: number
+  setCurrentTime: React.Dispatch<React.SetStateAction<number>>
+  setCountdownRunning: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const useCountdown = ({ initialTime, onFinish }: IUseCountDownProps): ICountDown => {
   const [countdownRunning, setCountdownRunning] = useState(false)
   const [currentTime, setCurrentTime] = useState(initialTime)
 
