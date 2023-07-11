@@ -1,29 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
 interface IUseCountDownProps {
-  initialTime: number;
-  onFinish: () => void;
+  initialTime: number
+  onFinish: () => void
 }
 
 export const useCountdown = ({ initialTime, onFinish }: IUseCountDownProps) => {
-  const [countdownRunning, setCountdownRunning] = useState(false);
-  const [currentTime, setCurrentTime] = useState(initialTime);
+  const [countdownRunning, setCountdownRunning] = useState(false)
+  const [currentTime, setCurrentTime] = useState(initialTime)
 
   useEffect(() => {
-    let countDownInterval: NodeJS.Timeout | undefined;
+    let countDownInterval: NodeJS.Timeout | undefined
     if (countdownRunning && currentTime > 0) {
       countDownInterval = setInterval(() => {
-        setCurrentTime((prevTime) => prevTime - 1);
-      }, 1000);
+        setCurrentTime((prevTime) => prevTime - 1)
+      }, 1000)
     } else if (countdownRunning && currentTime === 0) {
-      setCountdownRunning(false);
-      onFinish();
+      setCountdownRunning(false)
+      onFinish()
     }
     return () => {
-      if (countDownInterval) {
-        clearInterval(countDownInterval);
+      if (countDownInterval != null) {
+        clearInterval(countDownInterval)
       }
-    };
-  }, [countdownRunning, currentTime, onFinish]);
-  return { countdownRunning, currentTime, setCurrentTime, setCountdownRunning };
-};
+    }
+  }, [countdownRunning, currentTime, onFinish])
+  return { countdownRunning, currentTime, setCurrentTime, setCountdownRunning }
+}

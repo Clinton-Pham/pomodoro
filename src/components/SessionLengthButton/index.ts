@@ -1,1 +1,1 @@
-export * from "./SessionLengthControl";
+export * from './SessionLengthControl'

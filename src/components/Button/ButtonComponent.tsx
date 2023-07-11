@@ -1,16 +1,16 @@
-import { Button } from "evergreen-ui";
-import React from "react";
+import { Button } from 'evergreen-ui'
+import React from 'react'
 interface IButtonProps {
-  onClick: () => void;
-  disabled?: boolean;
-  children: React.ReactNode;
-  icon?: string;
+  onClick: () => void
+  disabled?: boolean
+  children: React.ReactNode
+  icon?: string
 }
 
 export const ButtonComponent: React.FC<IButtonProps> = ({
   onClick,
   disabled,
-  children,
+  children
 }: IButtonProps) => {
   return (
     <div>
@@ -18,5 +18,5 @@ export const ButtonComponent: React.FC<IButtonProps> = ({
         {children}
       </Button>
     </div>
-  );
-};
+  )
+}

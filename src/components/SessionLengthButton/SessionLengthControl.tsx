@@ -1,32 +1,32 @@
-import React from "react";
+import React from 'react'
 import {
   ArrowDownIcon,
   ArrowUpIcon,
   Button,
   Heading,
-  Pane,
-} from "evergreen-ui";
+  Pane
+} from 'evergreen-ui'
 
 interface SessionLengthButtonProps {
-  sessionLength: number;
-  onChange: (newTime: number) => void;
-  disabled?: boolean;
-  title: string;
+  sessionLength: number
+  onChange: (newTime: number) => void
+  disabled?: boolean
+  title: string
 }
 
 export const SessionLengthControl: React.FC<SessionLengthButtonProps> = ({
   sessionLength,
   onChange,
   disabled = false,
-  title,
+  title
 }: SessionLengthButtonProps) => {
   const handleIncrementCounter = (): void => {
-    onChange(sessionLength + 1);
-  };
+    onChange(sessionLength + 1)
+  }
 
   const handleDecrementCounter = (): void => {
-    onChange(sessionLength > 1 ? sessionLength - 1 : 1);
-  };
+    onChange(sessionLength > 1 ? sessionLength - 1 : 1)
+  }
   return (
     <Pane display="flex" alignItems="center" justifyContent="center">
       <Heading size={800} marginLeft={50} marginRight={10}>
@@ -48,5 +48,5 @@ export const SessionLengthControl: React.FC<SessionLengthButtonProps> = ({
         <ArrowDownIcon />
       </Button>
     </Pane>
-  );
-};
+  )
+}

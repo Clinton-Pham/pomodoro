@@ -1,9 +1,9 @@
-import React from "react";
-import { Heading } from "evergreen-ui";
+import React from 'react'
+import { Heading } from 'evergreen-ui'
 
 interface SessionTime {
-  time: string;
-  title: string;
+  time: string
+  title: string
 }
 export const SessionTime = ({ time, title }: SessionTime) => {
   return (
@@ -12,5 +12,5 @@ export const SessionTime = ({ time, title }: SessionTime) => {
       <br />
       {time}
     </Heading>
-  );
-};
+  )
+}
