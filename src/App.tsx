@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 import {
   SessionLengthControl,
@@ -8,12 +8,25 @@ import {
 import { formatTime } from "./utils";
 import { Pane, PauseIcon, PlayIcon, ResetIcon } from "evergreen-ui";
 import { useCountdown } from "./hooks/useCountdown";
+import soundFile from "./audio/alarm-clock-short-6402.mp3";
 
 function App() {
-  const [sessionLength, setSessionLength] = useState(1);
+  const [sessionLength, setSessionLength] = useState(0);
   const [breakLength, setBreakLength] = useState(5);
   const [isBreak, setIsBreak] = useState(false);
   const [sessionCounter, setSessionCounter] = useState(0);
+  const [playAlarm, setPlayAlarm] = useState(false);
+  const audioRef = useRef(new Audio(soundFile));
+
+  useEffect(() => {
+    if (playAlarm) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  }, [playAlarm]);
+
   const { countdownRunning, currentTime, setCurrentTime, setCountdownRunning } =
     useCountdown({
       initialTime: sessionLength * 60,
@@ -21,20 +34,23 @@ function App() {
         if (isBreak) {
           setIsBreak(false);
           setCurrentTime(sessionLength * 60);
+          setSessionCounter(sessionCounter + 1);
         } else {
           setIsBreak(true);
           setCurrentTime(breakLength * 60);
-          setSessionCounter(sessionCounter + 1);
         }
+        setPlayAlarm(true);
       },
     });
 
   const handlePause = (): void => {
     setCountdownRunning(!countdownRunning);
+    setPlayAlarm(false);
   };
 
   const handleReset = (): void => {
     setIsBreak(false);
+    setPlayAlarm(false);
     setCurrentTime(sessionLength * 60);
   };
 
@@ -55,14 +71,21 @@ function App() {
           sessionLength={sessionLength}
           onChange={(newTime: number) => {
             setSessionLength(newTime);
-            setCurrentTime(newTime * 60);
+            if (!isBreak) {
+              setCurrentTime(newTime * 60);
+            }
           }}
         />
 
         <SessionLengthControl
           title="Break Length"
           sessionLength={breakLength}
-          onChange={setBreakLength}
+          onChange={(newTime: number) => {
+            setBreakLength(newTime);
+            if (isBreak) {
+              setCurrentTime(newTime * 60);
+            }
+          }}
           disabled={countdownRunning}
         />
       </Pane>
